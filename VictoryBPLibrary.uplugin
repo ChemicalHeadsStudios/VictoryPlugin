@@ -20,7 +20,9 @@
 		{
 			"Name" : "VictoryBPLibrary",
 			"Type" : "Runtime",
-			"LoadingPhase" : "PreDefault"
+			"LoadingPhase" : "PreDefault",
+			"BlacklistPlatforms": []
+
 		}
 	],
 	"Plugins" :
