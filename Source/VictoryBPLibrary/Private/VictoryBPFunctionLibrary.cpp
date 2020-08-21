@@ -379,39 +379,39 @@ ULevelStreaming* UVictoryBPFunctionLibrary::VictoryLoadLevelInstance(
 	return nullptr;
  }	
 	
-//~~~~~~~
-//		AI
-//~~~~~~~ 
-EPathFollowingRequestResult::Type UVictoryBPFunctionLibrary::Victory_AI_MoveToWithFilter(
-	APawn* Pawn, 
-	const FVector& Dest, 
-	TSubclassOf<UNavigationQueryFilter> FilterClass ,
-	float AcceptanceRadius , 
-	bool bProjectDestinationToNavigation ,
-	bool bStopOnOverlap ,
-	bool bCanStrafe 
-){
-	if(!Pawn) 
-	{
-		return EPathFollowingRequestResult::Failed;
-	}
-	
-	AAIController* AIControl = Cast<AAIController>(Pawn->GetController());
-	if(!AIControl) 
-	{
-		return EPathFollowingRequestResult::Failed;
-	} 
-	
-	return AIControl->MoveToLocation(
-		Dest, 
-		AcceptanceRadius,
-		bStopOnOverlap, 	//bStopOnOverlap
-		true,						//bUsePathfinding 
-		bProjectDestinationToNavigation, 
-		bCanStrafe,			//bCanStrafe
-		FilterClass			//<~~~
-	);
-}
+// //~~~~~~~
+// //		AI
+// //~~~~~~~ 
+// EPathFollowingRequestResult::Type UVictoryBPFunctionLibrary::Victory_AI_MoveToWithFilter(
+// 	APawn* Pawn, 
+// 	const FVector& Dest, 
+// 	TSubclassOf<UNavigationQueryFilter> FilterClass ,
+// 	float AcceptanceRadius , 
+// 	bool bProjectDestinationToNavigation ,
+// 	bool bStopOnOverlap ,
+// 	bool bCanStrafe 
+// ){
+// 	if(!Pawn) 
+// 	{
+// 		return EPathFollowingRequestResult::Failed;
+// 	}
+// 	
+// 	AAIController* AIControl = Cast<AAIController>(Pawn->GetController());
+// 	if(!AIControl) 
+// 	{
+// 		return EPathFollowingRequestResult::Failed;
+// 	} 
+// 	
+// 	return AIControl->MoveToLocation(
+// 		Dest, 
+// 		AcceptanceRadius,
+// 		bStopOnOverlap, 	//bStopOnOverlap
+// 		true,						//bUsePathfinding 
+// 		bProjectDestinationToNavigation, 
+// 		bCanStrafe,			//bCanStrafe
+// 		FilterClass			//<~~~
+// 	);
+// }
 	
 //~~~~~~
 //GPU
@@ -571,46 +571,46 @@ bool UVictoryBPFunctionLibrary::VictoryPhysics_UpdateAngularDamping(UPrimitiveCo
 	return true;
 }
 	 
-bool UVictoryBPFunctionLibrary::VictoryDestructible_DestroyChunk(UDestructibleComponent* DestructibleComp, int32 HitItem)
-{   
-	#if WITH_APEX
-	if(!DestructibleComp) 
-	{
-		return false;
-	}
-	  
-	//Visibility
-	DestructibleComp->SetChunkVisible( HitItem, false );
-	 
-	//Collision
-	physx::PxShape** PShapes;
-	const physx::PxU32 PShapeCount = DestructibleComp->ApexDestructibleActor->getChunkPhysXShapes(PShapes, HitItem);
-	if (PShapeCount > 0)
-	{    
-		PxFilterData PQueryFilterData,PSimFilterData; //null data
-		  
-		for(uint32 ShapeIndex = 0; ShapeIndex < PShapeCount; ++ShapeIndex)
-		{ 
-			PxShape* Shape = PShapes[ShapeIndex];
-			if(!Shape) continue;
-			
-			{ 
-				SCOPED_SCENE_WRITE_LOCK(Shape->getActor()->getScene());
-				
-				Shape->setQueryFilterData(PQueryFilterData); //null data
-				Shape->setSimulationFilterData(PSimFilterData); //null data
-				Shape->setFlag(PxShapeFlag::eSCENE_QUERY_SHAPE, false);
-				Shape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, false);
-				Shape->setFlag(PxShapeFlag::eVISUALIZATION, false);	
-			}
-		}
-	}
-	return true;
-	#endif //WITH_APEX
-	 
-	UE_LOG(LogTemp,Error,TEXT("UVictoryBPFunctionLibrary::VictoryDestructible_DestroyChunk ~ Current Platform does not support APEX"));
-	return false;
-}
+// bool UVictoryBPFunctionLibrary::VictoryDestructible_DestroyChunk(UDestructibleComponent* DestructibleComp, int32 HitItem)
+// {   
+// 	#if WITH_APEX
+// 	if(!DestructibleComp) 
+// 	{
+// 		return false;
+// 	}
+// 	  
+// 	//Visibility
+// 	DestructibleComp->SetChunkVisible( HitItem, false );
+// 	 
+// 	//Collision
+// 	physx::PxShape** PShapes;
+// 	const physx::PxU32 PShapeCount = DestructibleComp->ApexDestructibleActor->getChunkPhysXShapes(PShapes, HitItem);
+// 	if (PShapeCount > 0)
+// 	{    
+// 		PxFilterData PQueryFilterData,PSimFilterData; //null data
+// 		  
+// 		for(uint32 ShapeIndex = 0; ShapeIndex < PShapeCount; ++ShapeIndex)
+// 		{ 
+// 			PxShape* Shape = PShapes[ShapeIndex];
+// 			if(!Shape) continue;
+// 			
+// 			{ 
+// 				SCOPED_SCENE_WRITE_LOCK(Shape->getActor()->getScene());
+// 				
+// 				Shape->setQueryFilterData(PQueryFilterData); //null data
+// 				Shape->setSimulationFilterData(PSimFilterData); //null data
+// 				Shape->setFlag(PxShapeFlag::eSCENE_QUERY_SHAPE, false);
+// 				Shape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, false);
+// 				Shape->setFlag(PxShapeFlag::eVISUALIZATION, false);	
+// 			}
+// 		}
+// 	}
+// 	return true;
+// 	#endif //WITH_APEX
+// 	 
+// 	UE_LOG(LogTemp,Error,TEXT("UVictoryBPFunctionLibrary::VictoryDestructible_DestroyChunk ~ Current Platform does not support APEX"));
+// 	return false;
+// }
 
 static int32 GetChildBones(const FReferenceSkeleton& ReferenceSkeleton, int32 ParentBoneIndex, TArray<int32> & Children)
 { 
@@ -2894,10 +2894,10 @@ bool UVictoryBPFunctionLibrary::Animation__GetAimOffsets(AActor* AnimBPOwner, fl
 	
 	return true;
 }
-bool UVictoryBPFunctionLibrary::Animation__GetAimOffsetsFromRotation(AActor * AnimBPOwner, const FRotator & TheRotation, float & Pitch, float & Yaw)
+bool UVictoryBPFunctionLibrary::Animation__GetAimOffsetsFromRotation(const AActor * AnimBPOwner, const FRotator & TheRotation, float & Pitch, float & Yaw)
 {
 	//Get Owning Character
-	ACharacter * TheCharacter = Cast<ACharacter>(AnimBPOwner);
+	const ACharacter* TheCharacter = Cast<ACharacter>(AnimBPOwner);
 	
 	if (!TheCharacter) return false;
 	//~~~~~~~~~~~~~~~
@@ -5337,8 +5337,8 @@ void UVictoryBPFunctionLibrary::GenericArray_Sort(void* TargetArray, const FArra
 					UObject* LeftObject = ObjectProperty->GetObjectPropertyValue(ArrayHelper.GetRawPtr(j));
 					UObject* RightObject = ObjectProperty->GetObjectPropertyValue(ArrayHelper.GetRawPtr(j + 1));
 
-					FProperty* LeftProperty = FindField<FProperty>(LeftObject->GetClass(), VariableName);
-					FProperty* RightProperty = FindField<FProperty>(RightObject->GetClass(), VariableName);
+					FProperty* LeftProperty = FindFProperty<FProperty>(LeftObject->GetClass(), VariableName);
+					FProperty* RightProperty = FindFProperty<FProperty>(RightObject->GetClass(), VariableName);
 						
 					if (LeftProperty && RightProperty)
 					{
@@ -5359,7 +5359,7 @@ void UVictoryBPFunctionLibrary::GenericArray_Sort(void* TargetArray, const FArra
 
 			if (const FStructProperty* StructProperty = Cast<const FStructProperty>(ArrayProp->Inner))
 			{
-				Property = FindField<FProperty>(StructProperty->Struct, VariableName);
+				Property = FindFProperty<FProperty>(StructProperty->Struct, VariableName);
 			}
 			else
 			{

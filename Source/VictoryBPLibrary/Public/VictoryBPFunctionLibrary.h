@@ -19,7 +19,7 @@
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 //AI
-#include "AIController.h"		//MoveToWithFilter
+// #include "AIController.h"		//MoveToWithFilter
 
 //Audio
 #include "Components/AudioComponent.h"
@@ -271,16 +271,16 @@ class VICTORYBPLIBRARY_API UVictoryBPFunctionLibrary : public UBlueprintFunction
 	* @param bCanStrafe - Set focus related flag: bAllowStrafe
 	* @return Whether the Pawn's AI Controller is valid and goal can be pathed to
 	*/
-	UFUNCTION(BlueprintCallable, Category = "Victory BP Library|AI")
-	static EPathFollowingRequestResult::Type Victory_AI_MoveToWithFilter(
-		APawn* Pawn,
-		const FVector& Dest,
-		TSubclassOf<UNavigationQueryFilter> FilterClass = NULL,
-		float AcceptanceRadius = 0,
-		bool bProjectDestinationToNavigation = false,
-		bool bStopOnOverlap = false,
-		bool bCanStrafe = false
-	);
+	// UFUNCTION(BlueprintCallable, Category = "Victory BP Library|AI")
+	// static EPathFollowingRequestResult::Type Victory_AI_MoveToWithFilter(
+	// 	APawn* Pawn,
+	// 	const FVector& Dest,
+	// 	TSubclassOf<UNavigationQueryFilter> FilterClass = NULL,
+	// 	float AcceptanceRadius = 0,
+	// 	bool bProjectDestinationToNavigation = false,
+	// 	bool bStopOnOverlap = false,
+	// 	bool bCanStrafe = false
+	// );
 
 	//~~~~~~~~~~~~~~~~
 	// 	GPU  <3 Rama
@@ -416,8 +416,8 @@ class VICTORYBPLIBRARY_API UVictoryBPFunctionLibrary : public UBlueprintFunction
 	UFUNCTION(BlueprintPure, Category = "Victory BP Library|Physics", meta=(Keywords="Closest Surface"))
 	static float GetDistanceBetweenComponentSurfaces(UPrimitiveComponent* CollisionComponent1, UPrimitiveComponent* CollisionComponent2, FVector& PointOnSurface1, FVector& PointOnSurface2);
 
-	UFUNCTION(BlueprintCallable, Category = "Victory BP Library|Physics", meta=(Keywords="APEX Piece fracture damage PhysX Physics"))
-	static bool VictoryDestructible_DestroyChunk(UDestructibleComponent* DestructibleComp, int32 HitItem);
+	// UFUNCTION(BlueprintCallable, Category = "Victory BP Library|Physics", meta=(Keywords="APEX Piece fracture damage PhysX Physics"))
+	// static bool VictoryDestructible_DestroyChunk(UDestructibleComponent* DestructibleComp, int32 HitItem);
 
  
 	//~~~~~~~~~~
@@ -1190,7 +1190,7 @@ class VICTORYBPLIBRARY_API UVictoryBPFunctionLibrary : public UBlueprintFunction
 
 	/** AnimBPOwner - Must be a Character, Conversion Internally For Convenience.\n\nRetrieves the Aim Offsets Pitch & Yaw for the AnimBPOwner Based On the supplied Rotation.\n\nThe Pitch and Yaw are meant to be used with a Blend Space going from -90,-90 to 90,90.\n    Returns true if function filled the pitch and yaw vars successfully */
 	UFUNCTION(BlueprintCallable, Category = "Victory BP Library|Aim Offset")
-		static bool Animation__GetAimOffsetsFromRotation(AActor * AnimBPOwner, const FRotator & TheRotation, float & Pitch, float & Yaw);
+		static bool Animation__GetAimOffsetsFromRotation(const AActor * AnimBPOwner, const FRotator & TheRotation, float & Pitch, float & Yaw);
 
 	/** Saves text to filename of your choosing, make sure include whichever file extension you want in the filename, ex: SelfNotes.txt . Make sure to include the entire file path in the save directory, ex: C:\MyGameDir\BPSavedTextFiles */
 	UFUNCTION(BlueprintCallable, Category = "Victory BP Library|File IO")
@@ -1728,7 +1728,7 @@ static void SetBloomIntensity(APostProcessVolume* PostProcessVolume,float Intens
 		Stack.MostRecentProperty = nullptr;
 		Stack.StepCompiledIn<FArrayProperty>(NULL);
 		void* ArrayAddr = Stack.MostRecentPropertyAddress;
-		FArrayProperty* ArrayProperty = Cast<FArrayProperty>(Stack.MostRecentProperty);
+		FArrayProperty* ArrayProperty = CastField<FArrayProperty>(Stack.MostRecentProperty);
 		if (!ArrayProperty)
 		{
 			Stack.bArrayContextFailed = true;
@@ -1844,7 +1844,7 @@ static void SetBloomIntensity(APostProcessVolume* PostProcessVolume,float Intens
 		Stack.MostRecentProperty = nullptr;
 		Stack.StepCompiledIn<FArrayProperty>(NULL);
 		void* ArrayAddr = Stack.MostRecentPropertyAddress;
-		FArrayProperty* ArrayProperty = Cast<FArrayProperty>(Stack.MostRecentProperty);
+		FArrayProperty* ArrayProperty = CastField<FArrayProperty>(Stack.MostRecentProperty);
 		if (!ArrayProperty)
 		{
 			Stack.bArrayContextFailed = true;
