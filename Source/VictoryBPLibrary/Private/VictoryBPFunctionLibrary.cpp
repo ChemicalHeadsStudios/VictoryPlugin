@@ -5328,7 +5328,7 @@ void UVictoryBPFunctionLibrary::GenericArray_Sort(void* TargetArray, const FArra
 		FScriptArrayHelper ArrayHelper(ArrayProp, TargetArray);
 		const int32 LastIndex = ArrayHelper.Num();
 
-		if (const FObjectProperty* ObjectProperty = Cast<const FObjectProperty>(ArrayProp->Inner))
+		if (const FObjectProperty* ObjectProperty = CastField<const FObjectProperty>(ArrayProp->Inner))
 		{
 			for (int32 i = 0; i < LastIndex; ++i)
 			{
